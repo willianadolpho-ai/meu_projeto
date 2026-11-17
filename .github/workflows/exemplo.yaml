@@ -1,18 +1,22 @@
-name: Exemplo Workflow
-on:
-    push:
-        branches: [main]
-    workflow_dispatch:
-jobs:
-    verificar-repositorio:
-        runs-on: ubuntu-latest
+name: Meu Primeiro Workflow com Teste
 
-        steps:
-            - name: Baixar arquivos do repositório
-              uses: actions/checkout@v4
-            - name: Exibir informações básicas do repositório
-              run: |
-                echo "Nome do repositório: ${{ github.repository }}"
-                echo "Branch atual: ${{ github.ref }}"
-                echo "Automação executada com sucesso!"
-                ls -la
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  rodar-testes:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar arquivos do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Executar testes automatizados
+        run: node --test
